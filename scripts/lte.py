@@ -46,6 +46,7 @@ def cartesian_transform(new_L, P):
 
 
 def LTE(X, C=None, inds=[]):
+    X = X[0]
     n_pts, n_dims = np.shape(X)
     L = generate_laplacian(n_pts)
     D = laplacian_transform(L, X)
@@ -63,11 +64,11 @@ def main2D():
     
     traj = np.hstack((x_demo, y_demo))
     
-    new_traj = LTE(traj, [np.array([x_demo[0], y_demo[0]]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1])
+    new_traj = LTE([traj], [np.array([x_demo[0], y_demo[0]]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1])
     
-    new_traj2 = LTE(traj, [np.array([x_demo[0]+0.5, y_demo[0]-0.2]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1])
+    new_traj2 = LTE([traj], [np.array([x_demo[0]+0.5, y_demo[0]-0.2]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1])
     
-    new_traj3 = LTE(traj, [np.array([x_demo[0]+0.5, y_demo[0]-0.2]), np.array([x_demo[20]-0.1, y_demo[20]-0.3]), np.array([x_demo[-1], y_demo[-1]+0.2])], [0, 20, num_points-1])
+    new_traj3 = LTE([traj], [np.array([x_demo[0]+0.5, y_demo[0]-0.2]), np.array([x_demo[20]-0.1, y_demo[20]-0.3]), np.array([x_demo[-1], y_demo[-1]+0.2])], [0, 20, num_points-1])
     
     plt.rcParams['figure.figsize'] = (6.5, 6.5)
     fig, axs = plt.subplots(2, 2)
@@ -112,7 +113,7 @@ def main3D():
     
     traj = np.hstack((x_demo, y_demo, z_demo))
     
-    new_traj = LTE(traj, [np.array([x_demo[0] + 0.5, y_demo[0] - 0.5, z_demo[0] + 0.5]), np.array([x_demo[-1], y_demo[-1], z_demo[-1]])], [0, num_points-1])
+    new_traj = LTE([traj], [np.array([x_demo[0] + 0.5, y_demo[0] - 0.5, z_demo[0] + 0.5]), np.array([x_demo[-1], y_demo[-1], z_demo[-1]])], [0, num_points-1])
     
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1, projection='3d')
