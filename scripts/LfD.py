@@ -6,7 +6,7 @@ from dmp import DMP as dmp
 import sys
 sys.path.insert(1, './Guassian-Mixture-Models')
 from GMM_GMR import GMM_GMR
-
+from TLFSD import TLFSD as tlfsd
 from scipy.optimize import minimize
 
 
@@ -163,3 +163,23 @@ class GMM(_LFD):
             res = minimize(self.get_constraint_cost, suggest_traj.flatten(), tol=1e-6)
 
             self.reproduction = np.transpose(np.reshape(res.x,(self.n_dims, self.n_pts)))
+
+class TLFSD():
+    def __init__(self, success=[], failure=[], constraints=[], indices=[],k=None, num_states=4, include_other_system=False):
+        self.s_demos = np.array(success)
+        self.f_demos= np.array(failure)
+        self.constraints = np.array(constraints)
+        self.indices = np.array(indices)
+        self.k = k
+        self.num_states = num_states
+        self.include_other_system = include_other_system
+        self._generate()
+
+    def set_demo(self, new_success=[], new_failure=[]):
+        self.s_demos = np.array(new_success)
+        self.f_demos = np.array(new_failure)
+
+    def _generate(self):
+        model = tlfsd(self.s_demos, self.f_demos)
+        model.encode_GMMs(self.num_states, self.include_other_system)
+        self.reproduction = model.get_successful_reproduction(self.k, self.indices, self.constraints)
