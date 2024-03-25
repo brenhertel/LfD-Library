@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 import matplotlib.pyplot as plt
-
+from LfD import *
 from lte import LTE as lte
 import sys
 sys.path.insert(1, './Guassian-Mixture-Models')
