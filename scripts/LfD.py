@@ -6,7 +6,7 @@ from dmp import DMP as dmp
 import sys
 sys.path.insert(1, './Guassian-Mixture-Models')
 from GMM_GMR import GMM_GMR
-from TLFSD import TLFSD as tlfsd
+#from TLFSD import TLFSD as tlfsd
 from scipy.optimize import minimize
 
 
@@ -49,14 +49,13 @@ class _LFD:
         else:
             print("NO REPRODUCTION IS AVAILABLE")
 
-
-
     def _generate(self):
         raise NotImplementedError
 
 class LTE(_LFD):
     def _generate(self):
         if self.demo is not None:
+            print(self.demo.shape)
             self.reproduction=lte(self.demo, C=self.constraints, inds=self.indices)
 
 class DMP(_LFD):

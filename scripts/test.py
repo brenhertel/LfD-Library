@@ -10,101 +10,6 @@ import matplotlib.patches as mpatches
 from scipy.optimize import minimize
 #from movement_primitives.promp import ProMP
 
-
-
-def get_reproduction(model="LTE", **kwargs):
-    if model == "LTE":
-        demo = []
-        C = None
-        inds = []
-        for key, value in kwargs.items():
-            if key == "demo":
-                demo = value
-            elif key == "C":
-                C = value
-            elif key == "inds":
-                inds = value
-        return lte(demo, C, inds)
-    elif model == "DMP":
-        demo = []
-        C = None
-        inds = []
-        duration = 1.0
-        dt = None
-        use_improved = True
-        k = None
-        D = None
-        for key, value in kwargs.items():
-            if key == "demo":
-                demo = value
-            elif key == "C":
-                C = value
-            elif key == "inds":
-                inds = value
-            elif key == "duration":
-                duration = value
-            elif key == "dt":
-                dt = value
-            elif key == "use_improved":
-                use_improved = value
-            elif key == 'k':
-                k = value
-            elif key == "D":
-                D = value
-        return DMP(demo, C, inds, duration, dt, use_improved, k, D)
-    elif model == "JA":
-        demo = []
-        C = None
-        inds = []
-        lmbda = None
-        time = None
-        C_vel = None
-        C_accel = None
-        method = 'fast'
-        for key, value in kwargs.items():
-            if key == "demo":
-                demo = value
-            elif key == "C":
-                C = value
-            elif key == "inds":
-                inds = value
-            elif key == "lmbda":
-                lmbda = value
-            elif key == "time":
-                time = value
-            elif key == "C_vel":
-                C_vel = value
-            elif C_accel == "C_accel":
-                C_accel = value
-            elif key == "method":
-                method = value
-        return JA(demo, C, inds, lmbda, time, C_vel, C_accel, method)
-
-    # NEED UPDATE#
-    elif model == "GMM":
-        demo = []
-        indices = []
-        constraints = []
-        num_states = 4
-        include_other_systems = False
-        k = None
-        for key, value in kwargs.items():
-            if key == "demo":
-                demo = value
-            elif key == "indices":
-                indices = value
-            elif key == "constraints":
-                constraints = "constraint"
-            elif key == "num_states":
-                num_states = value
-            elif key == 'include_other_systems':
-                include_other_systems = value
-            elif key == "K":
-                k = value
-        gmm = GMM_GMR(num_states)
-        if(len(demo)): pass
-
-
 def get_lasa_trajN(shape_name, n=1):
     # ask user for the file which the playback is for
     # filename = raw_input('Enter the filename of the .h5 demo: ')
@@ -220,9 +125,9 @@ def test(model_name,filepath, lmbda=None):
     # plt.show()
 
 if __name__ == '__main__':
-    test("LTE", "pictures/LTE.png")
-    test("DMP", "pictures/DMP.png")
-    test("JA", "pictures/JA.png", 10000)
-    test("GMM","pictures/GMM.png")
+    test("LTE", "test_results/LTE.png")
+    test("DMP", "test_result/DMP.png")
+    test("JA", "test_result/JA.png", 10000)
+    test("GMM","test_result/GMM.png")
 
 

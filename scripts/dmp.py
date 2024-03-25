@@ -14,7 +14,7 @@ import perform_dmp
 #note: C is broken down into constraints and indices corresponding to those constraints in code
 
 def DMP(X, C=None, inds=[], duration=1.0, dt=None, use_improved=True, k=None, D=None):
-    return perform_dmp.perform_dmp_general(X[0], C, inds, duration=1.0, dt=None, use_improved=True, k=None, D=None)
+    return perform_dmp.perform_dmp_general(X, C, inds, duration=1.0, dt=None, use_improved=True, k=None, D=None)
 
 def main2D():
     # demonstration
@@ -25,11 +25,11 @@ def main2D():
     
     traj = np.hstack((x_demo, y_demo))
     
-    new_traj = DMP([traj], [np.array([x_demo[0], y_demo[0]]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1])
+    new_traj = DMP(traj, [np.array([x_demo[0], y_demo[0]]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1])
     
-    new_traj2 = DMP([traj], [np.array([x_demo[0]+0.5, y_demo[0]-0.2]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1])
+    new_traj2 = DMP(traj, [np.array([x_demo[0]+0.5, y_demo[0]-0.2]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1])
     
-    new_traj3 = DMP([traj], [np.array([x_demo[0], y_demo[0]]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1], k=0.1, D=10)
+    new_traj3 = DMP(traj, [np.array([x_demo[0], y_demo[0]]), np.array([x_demo[-1], y_demo[-1]])], [0, num_points-1], k=0.1, D=10)
     
     plt.rcParams['figure.figsize'] = (6.5, 6.5)
     fig, axs = plt.subplots(2, 2)
@@ -72,7 +72,7 @@ def main3D():
     
     traj = np.hstack((x_demo, y_demo, z_demo))
     
-    new_traj = DMP([traj], [np.array([x_demo[0] + 0.5, y_demo[0] - 0.5, z_demo[0] + 0.5]), np.array([x_demo[-1], y_demo[-1], z_demo[-1]])], [0, num_points-1])
+    new_traj = DMP(traj, [np.array([x_demo[0] + 0.5, y_demo[0] - 0.5, z_demo[0] + 0.5]), np.array([x_demo[-1], y_demo[-1], z_demo[-1]])], [0, num_points-1])
     
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1, projection='3d')

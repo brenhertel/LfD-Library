@@ -87,9 +87,7 @@ def JA_single(x, init, end, lmbda, method, time=None):
     
 
 def JA(X, C=None, inds=[], lmbda=None, time=None, C_vel=None, C_accel=None, method='fast'):
-    X = X[0]
     n_pts, n_dims = np.shape(X)
-    
     #Automatic guess for lambda
     if lmbda is None:
         lmbda = math.ceil(np.size(X) / 20.0)
@@ -123,14 +121,15 @@ def main2D():
     t = np.linspace(0, 10, num_points).reshape((num_points, 1))
     x_demo = np.sin(t) + 0.01 * t**2 - 0.05 * (t-5)**2
     y_demo = np.cos(t) - 0.01 * t - 0.03 * t**2
-    
+    print(x_demo.shape, y_demo.shape)
+
     traj = np.hstack((x_demo, y_demo))
+
+    new_traj = JA(traj, np.array([[x_demo[0] , y_demo[0]],  [x_demo[-1], y_demo[-1]]]), [0, num_points-1], lmbda=85)
     
-    new_traj = JA([traj], np.array([[x_demo[0], y_demo[0]], [x_demo[-1], y_demo[-1]]]), [0, num_points-1], lmbda=85)
+    new_traj2 = JA(traj, np.array([[x_demo[0]+0.5, y_demo[0]-0.2], [x_demo[-1], y_demo[-1]]]), [0, num_points-1], lmbda=85)
     
-    new_traj2 = JA([traj], np.array([[x_demo[0]+0.5, y_demo[0]-0.2], [x_demo[-1], y_demo[-1]]]), [0, num_points-1], lmbda=85)
-    
-    new_traj3 = JA([traj], lmbda=65)
+    new_traj3 = JA(traj, lmbda=65)
     
     plt.rcParams['figure.figsize'] = (6.5, 6.5)
     fig, axs = plt.subplots(2, 2)
@@ -172,8 +171,8 @@ def main3D():
     z_demo = 2 * np.cos(t) * np.sin(t) - 0.01 * t**1.5 + 0.03 * t**2
     
     traj = np.hstack((x_demo, y_demo, z_demo))
-    
-    new_traj = JA([traj], [np.array([x_demo[0] + 0.5, y_demo[0] - 0.5, z_demo[0] + 0.5]), np.array([x_demo[-1], y_demo[-1], z_demo[-1]])], [0, num_points-1], lmbda=50)
+
+    new_traj = JA(traj, [np.array([x_demo[0] + 0.5, y_demo[0] - 0.5, z_demo[0] + 0.5]), np.array([x_demo[-1], y_demo[-1], z_demo[-1]])], [0, num_points-1], lmbda=50)
     
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1, projection='3d')
@@ -188,4 +187,4 @@ def main3D():
 
 if __name__ == '__main__':
     main2D()
-    main3D()
+    #main3D()
